@@ -1,14 +1,16 @@
 <template>
   <div style="display:inline">
-    <span class="content" id="active">{{toShow.content}}</span>
+    <!-- <span class="content" id="active">{{toShow.content}}</span> -->
     
-    <!-- <span v-if="toShow.type == true">
+    <span v-if="toShow.type == true">
       <span id="active" class="content">{{toShow.content}}</span>
     </span>
       
     <span v-else>
       <span class="content">{{toShow.content}}</span>
-    </span>  -->
+    </span> 
+
+    <!-- <span class="content">{{toShow.content}}</span> -->
     
   </div>
 </template>

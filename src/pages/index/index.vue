@@ -9,13 +9,13 @@
       <span :index="index" class="myclass"  v-for="(ch,index) in dataArr" :key="ch">{{ch}}</span>
     </div> -->
     
-    <div @touchstart="start($event)" @touchmove="move($event)" @touchend="end($event)">
-      <display :index="index" v-for="(ch,index) in dataArr" :key="ch.content || ch" :data="ch"></display>
-    </div>
-
     <!-- <div @touchstart="start($event)" @touchmove="move($event)" @touchend="end($event)">
-      <displayobj v-for="obj in dataObj" :key="obj" :toShow="obj"></displayobj>
+      <display :index="index" v-for="(ch,index) in dataArr" :key="ch.content || ch" :data="ch"></display>
     </div> -->
+
+    <div @touchstart="start($event)" @touchmove="move($event)" @touchend="end($event)">
+      <displayobj v-for="obj in dataObj" :key="obj" :toShow="obj"></displayobj>
+    </div>
 
   </div>
 </template>
@@ -54,14 +54,14 @@ export default {
   },
   mounted:function(){
     let that = this
-    // setTimeout(()=>{
-    //   const query = wx.createSelectorQuery()
-    //   query.selectAll('.content').boundingClientRect(function(rect){
-    //   for(var i = 0;i<rect.length;i++){
-    //     that.elementInfo.push(rect[i])
-    //   }
-    // }).exec()
-    // },50)
+    setTimeout(()=>{
+      const query = wx.createSelectorQuery()
+      query.selectAll('.content').boundingClientRect(function(rect){
+      for(var i = 0;i<rect.length;i++){
+        that.elementInfo.push(rect[i])
+      }
+    }).exec()
+    },50)
     
     // const query = wx.createSelectorQuery()
     // query.selectAll('.normal').boundingClientRect(function(rect){
@@ -78,16 +78,16 @@ export default {
     //   }
     // }).exec()
 
-    setTimeout(()=>{
-      const query = wx.createSelectorQuery()
-      query.selectAll('.text').boundingClientRect(function(rect){
-        //console.log(rect)
-        for(var i=0;i<rect.length;i++)
-        {
-          that.elementInfo.push(rect[i])
-        }
-      }).exec()
-    },50)
+    // setTimeout(()=>{
+    //   const query = wx.createSelectorQuery()
+    //   query.selectAll('.text').boundingClientRect(function(rect){
+    //     //console.log(rect)
+    //     for(var i=0;i<rect.length;i++)
+    //     {
+    //       that.elementInfo.push(rect[i])
+    //     }
+    //   }).exec()
+    // },50)
     
   },
   
@@ -127,17 +127,17 @@ export default {
 
     end(e){
       e.preventDefault()
-      // console.log(this.annotedIndex)
-      // let annoWord=''
-      // for(var m=this.annotedIndex[0];m<this.annotedIndex[0]+this.annotedIndex.length;m++){
-      //   annoWord=annoWord+this.dataObj[m].content
-      //   //this.dataObj[m].content=''
-      // }
-      // console.log(annoWord)
-      // //console.log(this.dataObj)
+      console.log(this.annotedIndex)
+      let annoWord=''
+      for(var m=this.annotedIndex[0];m<this.annotedIndex[0]+this.annotedIndex.length;m++){
+        annoWord=annoWord+this.dataObj[m].content
+        //this.dataObj[m].content=''
+      }
+      console.log(annoWord)
+      //console.log(this.dataObj)
 
-      // this.dataObj.splice(this.annotedIndex[0],this.annotedIndex.length,{'content':annoWord,'type':true})
-      // console.log(this.dataObj)
+      this.dataObj.splice(this.annotedIndex[0],this.annotedIndex.length,{'content':annoWord,'type':true})
+      console.log(this.dataObj)
       
 
       // for(var n=0;n<this.dataObj.length;n++){
@@ -147,17 +147,17 @@ export default {
       // }
       // console.log(this.dataObj)
       
-      let annoWord=''
-      let newArr = Array.from(this.dataArr)
+      // let annoWord=''
+      // let newArr = Array.from(this.dataArr)
       
-      for(var m=this.annotedIndex[0];m<this.annotedIndex[0]+this.annotedIndex.length;m++){
-        annoWord=annoWord+this.dataArr[m]
-      }
+      // for(var m=this.annotedIndex[0];m<this.annotedIndex[0]+this.annotedIndex.length;m++){
+      //   annoWord=annoWord+this.dataArr[m]
+      // }
       
       //this.dataArr.splice(this.annotedIndex[0],this.annotedIndex.length)
-      newArr.splice(this.annotedIndex[0],this.annotedIndex.length,{'content':annoWord,'type':1})
-      this.dataArr = newArr
-      console.log(this.dataArr)
+      // newArr.splice(this.annotedIndex[0],this.annotedIndex.length,{'content':annoWord,'type':1})
+      // this.dataArr = newArr
+      // console.log(this.dataArr)
 
       // for(var i=0;i<this.dataArr.length;i++){
       //   if(this.annotedIndex.indexOf(i) != -1){
