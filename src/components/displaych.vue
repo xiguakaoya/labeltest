@@ -1,6 +1,6 @@
 <template>
   <div style="display:inline-block">
-    <span class="text">{{toShow}}</span>
+    <span class="text">{{toShow.content}}</span>
   </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
       toShow:{
           type:[String,Object]
       }
-  }
+  },
 }
 </script>
 

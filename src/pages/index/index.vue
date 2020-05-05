@@ -13,8 +13,8 @@
       <display :index="index" v-for="(ch,index) in dataArr" :key="ch.content || ch" :data="ch"></display>
     </div> -->
 
-    <div @touchstart="start($event)" @touchmove="move($event)" @touchend="end($event)">
-      <displayobj v-for="obj in dataObj" :key="obj" :toShow="obj"></displayobj>
+    <div @touchstart="move($event)" @touchmove="move($event)" @touchend="end($event)">
+      <display v-for="obj in dataObj" :key="obj" :data="obj"></display>
     </div>
 
   </div>
@@ -56,7 +56,7 @@ export default {
     let that = this
     setTimeout(()=>{
       const query = wx.createSelectorQuery()
-      query.selectAll('.content').boundingClientRect(function(rect){
+      query.selectAll('.text').boundingClientRect(function(rect){
       for(var i = 0;i<rect.length;i++){
         that.elementInfo.push(rect[i])
       }
@@ -101,23 +101,12 @@ export default {
     //   })
     // },
 
-    start(e){
-      e.preventDefault()
-      for(var i=0;i<this.elementInfo.length;i++){
-        if(e.touches[0].clientX>=this.elementInfo[i].left && e.touches[0].clientX<=this.elementInfo[i].right &&
-        e.touches[0].clientY>=this.elementInfo[i].top && e.touches[0].clientY<=this.elementInfo[i].bottom){
-          if(this.annotedIndex.indexOf(i) == -1){
-            this.annotedIndex.push(i)
-          }
-        }
-      }
-    },
-
     move(e){
       e.preventDefault()
-      for(var i=0;i<this.elementInfo.length;i++){
-        if(e.touches[0].clientX>=this.elementInfo[i].left && e.touches[0].clientX<=this.elementInfo[i].right &&
-        e.touches[0].clientY>=this.elementInfo[i].top && e.touches[0].clientY<=this.elementInfo[i].bottom){
+      const { pageX, pageY } = e.touches[0]
+      for(let i=0; i<this.elementInfo.length; i++) {
+        if(pageX >= this.elementInfo[i].left && pageX <= this.elementInfo[i].right &&
+        pageY >= this.elementInfo[i].top && pageY <= this.elementInfo[i].bottom){
           if(this.annotedIndex.indexOf(i) == -1){
             this.annotedIndex.push(i)
           }
@@ -127,17 +116,11 @@ export default {
 
     end(e){
       e.preventDefault()
-      console.log(this.annotedIndex)
       let annoWord=''
       for(var m=this.annotedIndex[0];m<this.annotedIndex[0]+this.annotedIndex.length;m++){
         annoWord=annoWord+this.dataObj[m].content
-        //this.dataObj[m].content=''
       }
-      console.log(annoWord)
-      //console.log(this.dataObj)
-
       this.dataObj.splice(this.annotedIndex[0],this.annotedIndex.length,{'content':annoWord,'type':true})
-      console.log(this.dataObj)
       
 
       // for(var n=0;n<this.dataObj.length;n++){
